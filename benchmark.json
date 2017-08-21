@@ -5,9 +5,17 @@
     "description":"",
     "version":"0.1.0",
     "input-size":{
+        "small": {
+            "model": "n",
+            "states": 64
+        },
         "medium": {
             "model": "n",
             "states": 512
+        },
+        "large": {
+            "model": "n",
+            "states": 1024
         }
     },
     "random-seed":1337,
