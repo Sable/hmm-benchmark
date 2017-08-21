@@ -23,10 +23,16 @@
         }
     ],
     "libraries":[
+        { "file": "./common/common.c" }
     ],
     "include-directories":[
+        {"file": "./common"}
     ],
     "dependencies": [
+        {
+            "source": "https://github.com/Sable/ostrich-c-implementation-common.git",
+            "destination": "./common"
+        }
     ],
     "compilation-flags": [
         "-DSERIAL",
