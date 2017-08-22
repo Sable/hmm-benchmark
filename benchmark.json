@@ -6,15 +6,15 @@
     "version":"0.1.0",
     "input-size":{
         "small": {
-            "model": 110,
+            "model": "n",
             "states": 64
         },
         "medium": {
-            "model": 110,
+            "model": "n",
             "states": 512
         },
         "large": {
-            "model": 110,
+            "model": "n",
             "states": 1024
         }
     },

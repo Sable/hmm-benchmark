@@ -522,7 +522,7 @@ function runner(v_, n_, s_, t_)
     var m;
     var s = s_ || S, t = t_ || T;
     var n = n_ || N;
-    var v_model= String.fromCharCode(v_);
+    var v_model= v_;
     var i;
 
     if(!v_model){
