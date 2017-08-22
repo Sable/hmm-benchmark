@@ -508,7 +508,7 @@ function run_hmm_bwa(hmm, in_obs, iterations, threshold){
 }
 
 /* Time the forward algorithm and vary the number of states */
-function bwa_hmm(v_, n_, s_, t_)
+function runner(v_, n_, s_, t_)
 {
     /* Initialize variables */
     hmm = {};                /* Initial HMM */
@@ -522,7 +522,7 @@ function bwa_hmm(v_, n_, s_, t_)
     var m;
     var s = s_ || S, t = t_ || T;
     var n = n_ || N;
-    var v_model= v_;
+    var v_model= String.fromCharCode(v_);
     var i;
 
     if(!v_model){
@@ -662,7 +662,8 @@ function bwa_hmm(v_, n_, s_, t_)
         console.log(t + "\t");
         console.log(log_lik + "\n");
     }
-    return { status: 1,
-             options: "bwa_hmm(" + [v_, n_, s_, t_].join(",") + ")",
-             time: (t2-t1)/1000 };
+    console.log(JSON.stringify({
+        status: 1,
+        options: "bwa_hmm(" + [v_, n_, s_, t_].join(",") + ")",
+        time: (t2-t1)/1000 }))
 }
