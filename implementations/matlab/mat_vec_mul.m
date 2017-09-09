@@ -17,7 +17,7 @@ if trans == 'n'
         idx_a1 = idx_a0 + n_size - 1;
         idx_b0 = offsetx + 1;
         idx_b1 = idx_b0 + n_size - 1;
-        y(offsety + i) = sum(a(idx_a0:idx_a1) .* x(idx_b0:idx_b1));
+        y(offsety + i) = single(sum(a(idx_a0:idx_a1) .* x(idx_b0:idx_b1)));
     end
 else
     for i = 1:m_size
@@ -25,7 +25,7 @@ else
         for j = 1:n_size
             val = val + a((j-1) * n_size + i) * x(offsetx + j);
         end
-        y(offsety + i) = val;
+        y(offsety + i) = single(val);
     end
 end
 end

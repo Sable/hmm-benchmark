@@ -16,7 +16,23 @@
     ],
     "runner-source-file": { "file": "./runner.m" },
     "runner-arguments": [
-        { "expand": "/experiment/input-size" }
+        {
+            "expand": "/experiment/input-size",
+            "path": "/model"
+        },
+        {
+            "expand": "/experiment/input-size",
+            "path": "/states"
+        }
     ],
-    "libraries":[]
+    "libraries":[
+        { "file": "./common/fletcherSum.m" }
+    ],
+    "dependencies": [
+        {
+            "source": "https://github.com/Sable/ostrich-matlab-implementation-common.git",
+            "destination": { "file": "./common" }
+        }
+    ]
+
 }

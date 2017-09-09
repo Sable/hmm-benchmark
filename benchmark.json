@@ -7,7 +7,7 @@
     "input-size":{
         "small": {
             "model": "n",
-            "states": 64
+            "states": 32
         },
         "medium": {
             "model": "n",
@@ -15,9 +15,26 @@
         },
         "large": {
             "model": "n",
-            "states": 1024
+            "states": 1000
         }
     },
     "random-seed":1337,
-    "dwarf": "graphical models"
+    "dwarf": "graphical models",
+    "expected-output": {
+	 "small": {
+            "a": 20512,
+            "b": 2832,
+	    "pi": 4225
+         },
+	 "medium": {
+            "a": 1282,
+            "b": 33537,
+	    "pi": 385
+         },
+	 "large": {
+            "a": 24234,
+            "b": 10485,
+	    "pi": 62849
+         }
+    }
 }

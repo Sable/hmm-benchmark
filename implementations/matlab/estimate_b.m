@@ -1,4 +1,6 @@
 function [b,c] = estimate_b(b,c,alpha,beta,gamma_sum,ones_s,obs,length,nstates,nsymbols)
+global hmm_b;
+b = zeros(nstates, nsymbols);
 for t = 1:length
     offset = (t - 1) * nstates;
     sum_ab = sum(alpha(offset+1:offset+nstates) .* beta(offset+1:offset+nstates));
@@ -15,6 +17,7 @@ for t = 1:length
             end
         end
     end
+end
     % est_b_dev
     for i = 1:nstates
         for j = 1:nsymbols
@@ -35,5 +38,5 @@ for t = 1:length
             end
         end
     end
-end
+    hmm_b = b;
 end

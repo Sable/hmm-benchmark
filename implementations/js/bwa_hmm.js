@@ -28,6 +28,9 @@ if (typeof performance === "undefined") {
     performance = Date;
 }
 
+var ndarray = require('ndarray')
+var ops = require('ndarray-ops')
+
 var T =  1000;        /* Number of static observations */
 var S = 2;           /* Number of static symbols */
 var N = 60;          /* Number of static states */
@@ -388,7 +391,7 @@ function estimate_b(b)
         /* Calculate denominator */
         sum_ab = dot_product(nstates, alpha, t * nstates,
                              beta, t * nstates);
-        acc_b_dev(b, alpha, beta, sum_ab, nstates, nsymbols, obs[t+1], t);
+        acc_b_dev(b, alpha, beta, sum_ab, nstates, nsymbols, obs[t], t);
     }
 
     /* Re-estimate B values */
@@ -576,7 +579,7 @@ function runner(v_, n_, s_, t_)
         console.log("The time is " + (t2-t1)/1000 + " seconds");
         console.log("Observations\tLog_likelihood\n");
         console.log(n + "\t");
-        console.log(log_lik + "\n");
+        console.log(log_lik.toFixed(6) + "\n");
 
     } else if(v_model == 's'){
         /* Create observation sequence */
@@ -665,5 +668,11 @@ function runner(v_, n_, s_, t_)
     console.log(JSON.stringify({
         status: 1,
         options: "bwa_hmm(" + [v_, n_, s_, t_].join(",") + ")",
-        time: (t2-t1)/1000 }))
+        time: (t2-t1)/1000,
+        output: {
+        a: parseInt(fletcher_sum_ndarray(ndarray(hmm.a))),
+        b: parseInt(fletcher_sum_ndarray(ndarray(hmm.b))),
+        pi: parseInt(fletcher_sum_ndarray(ndarray(hmm.pi)))
+        }
+        }))
 }

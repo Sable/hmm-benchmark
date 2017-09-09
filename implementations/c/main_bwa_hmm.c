@@ -120,7 +120,7 @@ float *c;
  * Both vectors must be atleast of length n
  */
 float dot_product(int n, float *x, int offsetx, float *y, int offsety){
-    float result = 0.0f;
+    double result = 0.0f;
     int i = 0;
     if(x == NULL || y == NULL || n == 0) return result;
 
@@ -137,7 +137,7 @@ void mat_vec_mul(char trans, int m, int n, float *a, int lda, float *x, int offs
     }
 
     int i,j, n_size, m_size;
-    float sum;
+    double sum;
     if(lda == m){
         n_size = n;
         m_size = m;
@@ -217,8 +217,8 @@ void printM(float *aa, int m, int n){
 }
 
 /* Calculates the forward variables (alpha) for an HMM and obs. sequence */
-float calc_alpha(float *a, float *b, float *pi){
-    float log_lik;
+double calc_alpha(float *a, float *b, float *pi){
+    double log_lik;
     int t;
     int offset_cur;
     int offset_prev;
@@ -458,7 +458,7 @@ int estimate_b(float *b)
         /* Calculate denominator */
         sum_ab = dot_product(nstates, alpha, t * nstates,
                              beta, t * nstates);
-        acc_b_dev(b, alpha, beta, sum_ab, nstates, nsymbols, *(obs + t+1), t);
+        acc_b_dev(b, alpha, beta, sum_ab, nstates, nsymbols, *(obs + t), t);
     }
 
     /* Re-estimate B values */
@@ -500,7 +500,7 @@ int estimate_pi(float *pi)
 //  */
 
 // /* Runs the Baum-Welch Algorithm on the supplied HMM and observation sequence */
-float run_hmm_bwa(  Hmm *hmm,
+double run_hmm_bwa(  Hmm *hmm,
                     Obs *in_obs,
                     int iterations,
                     float threshold)
@@ -510,8 +510,8 @@ float run_hmm_bwa(  Hmm *hmm,
     float *a;
     float *b;
     float *pi;
-    float new_log_lik = 0;
-    float old_log_lik = 0;
+    double new_log_lik = 0;
+    double old_log_lik = 0;
     int iter;
 
     /* Initialize HMM values */
@@ -608,11 +608,12 @@ int main(int argc, char *argv[])
     float *b;
     float *pi;
     int *obs_seq;
-    float log_lik;           /* Output likelihood of FO */
+    double log_lik;           /* Output likelihood of FO */
     int s = S, t = T;
     int n = N;
     int i;
     stopwatch sw;
+    int f_sum_a, f_sum_b, f_sum_pi;
 
     fprintf(stderr, "Starting bwa_hmm\n");
 
@@ -693,6 +694,11 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Observations\tLog_likelihood\n");
         fprintf(stderr, "%i\t", n);
         fprintf(stderr, "%f\n", log_lik);
+
+        f_sum_a = fletcher_sum_1d_array_float(hmm->a, n * n);
+        f_sum_b = fletcher_sum_1d_array_float(hmm->b, n * S);
+        f_sum_pi = fletcher_sum_1d_array_float(hmm->pi, n);
+
 
         /* Free memory */
         free(a);
@@ -817,6 +823,6 @@ int main(int argc, char *argv[])
         // printf("\n");
     }
 
-    printf("{ \"status\": %d, \"options\": \"-v %c -n %d\", \"time\": %f }\n", 1, v_model, n, get_interval_by_sec(&sw));
+    printf("{ \"status\": %d, \"options\": \"-v %c -n %d\", \"time\": %f, \"output\": { \"a\": %d, \"b\": %d, \"pi\": %d } }\n", 1, v_model, n, get_interval_by_sec(&sw), f_sum_a, f_sum_b, f_sum_pi);
     return 0;
 }
