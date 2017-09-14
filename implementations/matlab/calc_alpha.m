@@ -1,14 +1,15 @@
 function [log_lik,alpha,scale] = calc_alpha(a,b,pi,nstates,alpha,obs,scale,length)
+global ones_n; 
 % init alpha
 ones_n = ones(1, nstates);
 for i= 1:nstates
-    alpha(i) = pi(i) * b(obs(1) * nstates + i);
+    alpha(i) = single(pi(i) * b((obs(1) - 1) * nstates + i));
 end
 
 % dot_product
 scale(1) = sum(alpha(1:nstates) .* ones_n(1:nstates));
 % scale_alpha_values
-alpha(1:nstates) = alpha(1:nstates) / scale(1);
+alpha(1:nstates) = single(alpha(1:nstates) / scale(1));
 % init log likelihood
 log_lik = log10(scale(1));
 
@@ -24,7 +25,7 @@ for t = 2:length
     % scale[t] = dot_product(nstates, alpha, offset_cur, ones_n, 0);
     scale(t) = sum(alpha(offset_cur + 1:offset_cur + nstates) .* ones_n(1:nstates));
     % scale_alpha_values
-    alpha(offset_cur + 1:alpha_seg) = alpha(offset_cur + 1:alpha_seg) / scale(t);
+    alpha(offset_cur + 1:alpha_seg) = single(alpha(offset_cur + 1:alpha_seg) / scale(t));
     log_lik = log_lik + log10(scale(t));
 end
 

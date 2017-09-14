@@ -1,4 +1,5 @@
 function [err,new_log_lik] = run_hmm_bwa(a,b,pi,nsymbols,nstates,obs,length,iterations,threshold)
+global ones_n; 
 EXIT_ERROR = 1; err = 0;
 scale = zeros(1,length);
 

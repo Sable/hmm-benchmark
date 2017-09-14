@@ -7,7 +7,7 @@ for t = 1:length-1
     for i = 1:nstates
         for j = 1:nstates
             offsetj = (j - 1) * nstates + i;
-            xi_sum(offsetj) = xi_sum(offsetj) + alpha(offset + j) * a(offsetj) * b((obs(t+1)-1)*nstates + i) * beta(t * nstates + i) / sum_ab;
+            xi_sum(offsetj) = single(xi_sum(offsetj) + alpha(offset + j) * a(offsetj) * b((obs(t+1) - 1)*nstates + i) * beta(t * nstates + i) / sum_ab);
         end
     end
 end
