@@ -29,7 +29,6 @@ if (typeof performance === "undefined") {
 }
 
 var ndarray = require('ndarray')
-var ops = require('ndarray-ops')
 
 var T =  1000;        /* Number of static observations */
 var S = 2;           /* Number of static symbols */
