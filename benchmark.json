@@ -1,9 +1,9 @@
 {
     "type": "benchmark",
-    "name":"Baum-Welch Algorithm",
-    "short-name":"bwa_hmm",
-    "description":"",
-    "version":"0.1.0",
+    "name":"",
+    "short-name": "hmm",
+    "description":"Baum-Welch Algorithm for finding unknown parameters in a Hidden Markov Model.",
+    "version":"1.0.0",
     "input-size":{
         "small": {
             "model": "n",
@@ -18,23 +18,22 @@
             "states": 1000
         }
     },
-    "random-seed":1337,
     "dwarf": "graphical models",
     "expected-output": {
 	 "small": {
             "a": 20512,
             "b": 2832,
-	    "pi": 4225
+	        "pi": 4225
          },
 	 "medium": {
             "a": 1282,
             "b": 33537,
-	    "pi": 385
+	        "pi": 385
          },
 	 "large": {
             "a": 24234,
             "b": 10485,
-	    "pi": 62849
+	        "pi": 62849
          }
     }
 }
